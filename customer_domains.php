@@ -390,6 +390,14 @@ elseif($page == 'domains')
 				{
 					$aliasdomains.= makeoption($idna_convert->decode($row_domain['domain']), $row_domain['id']);
 				}
+				
+				// CUSTOM CODE - ADDED BY SCOTT
+                                // Add wordpress.berkshirescouts.org.uk as an avaliable alias if it doesnt already exist as an avaliable alias
+                                if(stripos($aliasdomains, 'wordpress.berkshirescouts.org.uk') !== false){
+                                        // Do nothing.. Had to have this for some reason!
+                                } else {
+                                        $aliasdomains.= makeoption($idna_convert->decode('wordpress.berkshirescouts.org.uk'), 6);
+                                }
 
 				$redirectcode = '';
 				if($settings['customredirect']['enabled'] == '1')
@@ -506,7 +514,11 @@ elseif($page == 'domains')
 
 				if($aliasdomain_check['id'] != $aliasdomain)
 				{
-					standard_error('domainisaliasorothercustomer');
+                                        // CUSTOM CODE - ADDED BY SCOTT
+                                        // Add wordpress.berkshirescouts.org.uk as an avaliable alias if it doesnt already exist as an avaliable alias
+                                        if($aliasdomain != 6){
+                                                standard_error('domainisaliasorothercustomer');
+                                        }
 				}
 
 				if(isset($_POST['openbasedir_path'])
@@ -579,6 +591,14 @@ elseif($page == 'domains')
 				{
 					$domains.= makeoption($idna_convert->decode($row_domain['domain']), $row_domain['id'], $result['aliasdomain']);
 				}
+				
+				 // CUSTOM CODE - ADDED BY SCOTT
+                                // Add wordpress.berkshirescouts.org.uk as an avaliable alias if it doesnt already exist as an avaliable alias
+                                if(stripos($domains, 'wordpress.berkshirescouts.org.uk') !== false){
+                                        // Do nothing.. Had to have this for some reason!
+                                } else {
+                                        $domains.= makeoption($idna_convert->decode('wordpress.berkshirescouts.org.uk'), 6, $result['aliasdomain']);
+                                }
 
 				if(preg_match('/^https?\:\/\//', $result['documentroot'])
 				   && validateUrl($idna_convert->encode($result['documentroot']))
